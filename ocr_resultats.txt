@@ -668,3 +668,288 @@ X  « Launchpad @0A4 6 Connect (&) AWS: AdministratorAccess-87 2515283809 L23,co
 
 988268800006 600 =m*
 ----------------------------------------
+
+--- 14.png ---
+@ (base) aminemzali@MacBook-Pro-de-Sylvain ProjetNoSQL % cd kafka-vehicle-project
+
+(base) aminemzali@MacBook-Pro-de-Sylvain kafka-vehicle-project % cd producer
+
+source venv/bin/activate
+
+python simulate multi_producers.py
+
+Sending: {'vehicle_id': ‘truck-2', 'type': 'truck', ‘@timestamp': '2025-04-03T08:20:39Z', 'latitude': -88.973596
+
+, ‘'longitude': -91.879162, 'speed_kmh': 63.47, 'battery_level': 32}
+
+Sending: {'vehicle_id': 'scooter-2', 'type': 'scooter', '@timestamp': '2025-@4-03T08:20:40Z', ‘latitude': -84.18
+
+66525, ‘longitude’: 12.214716, 'speed_kmh': 37.63, ‘battery_level': 69}
+
+Sending: {'vehicle_id': 'scooter-2', 'type': 'scooter', '@timestamp': '2025-@4-03T08:20:41Z', ‘latitude': -43.07
+
+37895, ‘longitude’: 46.689551, 'speed_kmh': 14.74, 'battery_level': 98}
+
+Sending: {'vehicle_id': 'scooter-2', 'type': 'scooter', '@timestamp': '2025-@4-03T08:20:42Z', ‘latitude': 14.264
+
+@91, 'longitude': -60.553476, ‘speed_kmh': 73.78, ‘battery_level': 37}
+
+Sending: {'vehicle_id': 'truck-1', 'type': 'truck', ‘@timestamp': '2025-04-03T08:20:43Z', 'latitude': 53.5813995
+
+, ‘'longitude': -38.101901, 'speed_kmh': 34.49, 'battery_level': 24}
+
+Sending: {'vehicle_id': 'truck-2', 'type': 'truck', ‘@timestamp': '2025-04-03T08:20:44Z', 'latitude': 51.9319875
+
+, ‘'longitude': -23.040538, 'speed_kmh': 74.39, 'battery_level': 20}
+
+Sending: {'vehicle_id': 'scooter-1', 'type': 'scooter', '@timestamp': '2025-@4-03T08:20:45Z', ‘latitude': -3.404
+
+106, 'longitude': -49.186769, 'speed_kmh': 115.28, 'battery_level': 57}
+
+Sending: {'vehicle_id': 'veh-3', 'type': ‘car', '@timestamp': '2025-04-03T08:20:46Z', 'latitude': -56.5562785, ‘
+
+longitude': 57.268847, 'speed_kmh': 67.94, 'battery_level': 20}
+
+Sending: {'vehicle_id': 'scooter-1', 'type': 'scooter', '@timestamp': '2025-@4-03T08:20:47Z', ‘latitude': -25.42
+
+8905, ‘longitude’: -11.272847, 'speed_kmh': 93.5, ‘battery_level': 91}
+
+Sending: {'vehicle_id': 'truck-2', 'type': 'truck', ‘@timestamp': '2025-04-03T08:20:48Z', 'latitude': -20.15203,
+"longitude': -164.599557, ‘speed_kmh': 11.53, 'battery_level': 30}
+
+Sending: {'vehicle_id': 'truck-2', 'type': 'truck', ‘@timestamp': '2025-04-03T08:20:49Z', 'latitude': 7.6785565,
+longitude': -145.287443, 'speed_kmh': 52.93, 'battery_level': 37}
+
+Sending: {'vehicle_id': 'veh-2', 'type': 'car', '@timestamp': '2025-04-03T08:20:50Z', ‘latitude': 81.901126, ‘lo
+
+ngitude': 143.767085, 'speed_kmh': 110.68, ‘battery_level': 53}
+
+"AdministratorAccess-872515283809" (click to change) |", Cts TeSzanp : ‘2025-04-03T08:20:517', ‘latitude’: 4.85391, ‘long
+----------------------------------------
+
+--- 15.png ---
+@ (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % docker exec -it kafka kafka-topics \
+—-bootstrap-server localhost:9092 \
+—-create \
+—-topic vehicle-data-v2 \
+partitions 3 \
+—-replication-factor 1
+Created topic vehicle-data-v2.
+
+What's next:
+Try Docker Debug for seamless, persistent debugging tools in any container or image ~ docker debug kafka
+Learn more at https://docs.docker.com/go/debug-cli/
+@ (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % docker exec -it kafka kafka-topics \
+—-bootstrap-server localhost:9092 \
+—-describe --topic vehicle-data-v2
+
+Topic: vehicle-data-v2 TopicId: FyyN9R9GSv2ibGpFCONgcw PartitionCount: 3 ReplicationFactor: 1 Configs:
+Topic: vehicle-data-v2 Partition: 0 Leader: 1 Replicas: 1 Isr: 1
+Topic: vehicle-data-v2 Partition: 1 Leader: 1 Replicas: 1 Isr: 1
+Topic: vehicle-data-v2 Partition: 2 Leader: 1 Replicas: 1 Isr: 1
+
+What's next:
+
+Try Docker Debug for seamless, persistent debugging tools in any container or image ~ docker debug kafka
+Learn more at https://docs.docker.com/go/debug-cli/
+© (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % fj
+----------------------------------------
+
+--- 16.png ---
+(venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % source venv/bin/activate
+
+python simulate_multi_producers_v2.py
+
+Sending: {'vehicle_id': 'veh-1', 'type': 'car', '@timestamp': '2025-04-03T08:24:52Z', 'latitude': -5.673184, 'lo
+
+ngitude': 32.626266, ‘speed_kmh': 92.49, 'battery_level': 71}
+
+Sending: {'vehicle_id': 'veh-2', 'type': ‘'car', '@timestamp': '2025-04-03T08:24:53Z', ‘latitude': 1.171586, ‘lon
+
+gitude': 170.056029, 'speed_kmh': 88.05, ‘battery_level': 89}
+
+Sending: {'vehicle_id': 'veh-3', 'type': ‘car', '@timestamp': '2025-04-03T08:24:54Z', 'latitude': -88.3304135, '
+
+longitude': -10.46107, 'speed_kmh': 79.64, 'battery_level': 17}
+
+Sending: {'vehicle_id': 'truck-2', 'type': 'truck', ‘@timestamp': '2025-04-03T08:24:55Z', 'latitude': 15.986894,
+longitude': -140.157779, ‘speed_kmh': 80.92, 'battery_level': 27}
+
+Sending: {'vehicle_id': 'veh-3', 'type': ‘car', '@timestamp': '2025-04-03T08:24:56Z', 'latitude': 60.550846, ‘lo
+
+ngitude': 117.634548, ‘'speed_kmh': 45.74, 'battery_level': 48}
+
+Sending: {'vehicle_id': 'veh-2', 'type': ‘'car', '@timestamp': '2025-@4-03T08:24:57Z', ‘latitude’: -61.575957, ‘lL
+
+ongitude': 21.325371, 'speed_kmh': 46.32, ‘battery_level': 93}
+
+Sending: {'vehicle_id': 'veh-2', 'type': ‘'car', '@timestamp': '2025-@4-03T08:24:58Z', ‘latitude’: -11.7562885,
+
+longitude': -54.487581, 'speed_kmh': 59.68, 'battery_level': 90}
+----------------------------------------
+
+--- 17.png ---
+@ (base) aminemzali@MacBook-Pro-de-Sylvain kafka-vehicle-project % cd producer
+(base) aminemzali@MacBook-Pro-de-Sylvain producer % source venv/bin/activate
+python battery_alert_consumer. py
+® Battery Alert Consumer lancé..
+
+A ALERTE : truck-1 a une batterie faible (19%)
+AALERTE : truck-1 a une batterie faible (16%)
+A ALERTE : scooter-1 a une batterie faible (19%)
+A ALERTE : veh-2 a une batterie faible (10%)
+
+À ALERTE : scooter-1 a une batterie faible (18%)
+A ALERTE : scooter-2 a une batterie faible (15%)
+A ALERTE : scooter-1 a une batterie faible (14%)
+A ALERTE : scooter-2 a une batterie faible (19%)
+A ALERTE : scooter-2 a une batterie faible (15%)
+A ALERTE : scooter-2 a une batterie faible (13%)
+A ALERTE : veh-2 a une batterie faible (19%)
+
+A ALERTE : scooter-1 a une batterie faible (11%)
+A ALERTE : scooter-2 a une batterie faible (15%)
+À ALERTE : scooter-1 a une batterie faible (17%)
+A ALERTE : veh-2 a une batterie faible (19%)
+
+A ALERTE : veh-2 a une batterie faible (14%)
+
+A ALERTE : veh-1 a une batterie faible (13%)
+
+A ALERTE : veh-2 a une batterie faible (19%)
+
+A AICRTE , LL Don cpm hme et Le tht ao
+
+© © © © © oD
+----------------------------------------
+
+--- 18.png ---
+(venv) (base) aminemzali@acBook-Pro-de-Sylvain producer % python create_index_with_mapping. py
+Index 'vehicle-data-v2' créé avec mapping personnalisé.
+----------------------------------------
+
+--- 19.png ---
+from elasticsearch import Elasticsearch
+
+es = Elasticsearch("http://localhost: 9200")
+
+mapping = {
+"mappings": {
+"properties": {
+
+"@timestamp": {"type": "date"},
+“vehicle_id": {"type": "keyword"},
+"type": {"type": "keyword"},
+"Latitude": {"type": "float"},
+"Longitude": {"type": "float"},
+"speed_kmh": {"type": "float"},
+“battery_level": {"type": "float"}
+
+if not es.indices.exists(index="vehicle-data-v2"):
+es.indices.create(index="vehicle-data-v2", body=mapping)
+print("Index 'vehicle-data-v2' créé avec mapping personnalisé.")
+else:
+print("Index 'vehicle-data-v2' existe déja.")
+----------------------------------------
+
+--- 20.png ---
+» (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % python create_index_with_mapping. py
+Index 'vehicle-data-v2' avec geo_point créé.
+, (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % python simulate_multi_producers.py
+Sending: {'vehicle_id': 'scooter-1', 'type': 'scooter', '@timestamp': '2025-04-03T08:33:10Z', ‘latitude': -27.93
+60905, ‘longitude’: -119.408955, 'speed_kmh': 117.35, 'battery_level': 34}
+Sending: {'vehicle id': 'scooter—-1', '‘type': 'scooter', ‘@timestamp': '2025-04-037T08:33:11Z', 'latitude': -63.20
+----------------------------------------
+
+--- 21.png ---
+vehicle-data-v2 nor
+
+BRITTANY
+
+XN
+
+| cenraevat <
+DE LOIRE |}
+DE LOI!
+
+si
+col 44.40834, lon: 3. 66787, zoo 4.7
+
+OCCITANTA ae MONA
+Me os
+
+eat Maps Service OpenMapTiles (7, OpenStreetMap contributors € B
+----------------------------------------
+
+--- 22.png ---
+Sending: 4 vehicle_id': ‘truck-21', ‘type’: ‘truck’, ‘@timestamp': '2025-04-@3T09:19:0@7Z', ‘latitude’: 43.319435
+, ‘'longitude': 5.409034, 'speed_kmh': 13.62, 'battery_level': 95.6}
+
+Sending: {'vehicle_id': 'veh-42', 'type': ‘car', '@timestamp': '2025-04-03T09:19:08Z', ‘latitude': 48.872939, 'L
+ongitude': 2.297719, 'speed_kmh': 12.8, ‘battery_level': 95.6}
+
+Sending: {'vehicle_id': 'bus-7', 'type': 'bus', '@timestamp': '2025-04-03T09:19:08Z', ‘latitude’: 45.771915, ‘lo
+ngitude': 4.88383, 'speed_kmh': 8.55, ‘battery level': 95.6}
+----------------------------------------
+
+--- 23.png ---
+History Settings Variables Help | 200 - OK 23 ms
+
+1 GET vehicle-data-v2/_search PX 1-{
+2% { 2 "took": 1,
+3~ "query": { 3 "timed_out": false,
+4- | "bool": { 4~  “_shards": {
+5+ | | "must": [ 5 "total": 1,
+6 | | | £{ "term": { "type": "truck" }}, 6 "successful": 1,
+7 | | | { "range": { "battery_level": { "lt": 100 }}}, 7 "skipped": @,|
+8 | | | £ "range": { "speed_kmh": { "gt": 10 }}} 8 "failed": @
+9- ||] 9- 3,
+10- | } 19- "hits": {
+11+ } 11- "total": {
+12+} 12 "value": 166,
+13 "relation": "eq"
+14- },
+15 "max_score": 3.098054,
+I 16- "hits": [
+17- {
+18 "index": "vehicle-data-v2",
+19 "id": "DuLw-pUBchxoqWsPwJ6t" ,
+20 " score": 3.098054,
+21- "_source": {
+22 "vehicle_id": "truck-21",
+23 "type": "truck",
+24 "@timestamp": "2025-04-03T09:17:16Z",
+25 "Latitude": 43.306122,
+26 "Longitude": 5.392245,
+27 "speed_kmh": 10.01,
+28 "battery_level": 97.9,
+29 "Location": {
+30 | "lat": 43.306122,
+31 | "lon": 5.392245
+32 « tr
+----------------------------------------
+
+--- 24.png ---
+— Bar horizontal stacked v
+
+truck
+
+car
+
+Top 3 values of type
+
+bus
+
+o
+D
+
+6 8
+
+Average of speed_kmh
+
+14
+
+@ truck
+© car
+@ bus
+----------------------------------------
