@@ -1,0 +1,670 @@
+
+--- 1.png ---
+@ (base) aminemzali@MacBook-Pro-de-Sylvain ProjetNoSQL % mkdir kafka-vehicle-project
+
+cd
+
+kafka-vehicle-project
+
+touch docker-compose. yml
+
+@ (base) aminemzali@MacBook-Pro-de-Sylvain kafka-vehicle-project % docker-compose up -d
+WARN[@800] /Users/aminemzali/Documents/Efrei/S8/ProjetNoSQL/kafka-vehicle-project/docker-compose.yml: the attribute ‘version is obsolete, it will
+be ignored, please remove it to avoid potential confusion
+
+[+] Running 39/39
+
+Ca
+Ca
+Ca
+Ca
+
+elasticsearch Pulled
+zookeeper Pulled
+kibana Pulled
+
+kafka Pulled
+
+[+] Running 6/6
+
+Ss
+
+v
+v
+v
+v
+v
+b
+
+Network kafka-vehicle-project_elk
+Network kafka-vehicle-project_default
+Container zookeeper
+
+Container elasticsearch
+
+Container kibana
+
+Container kafka
+
+Created
+Created
+Started
+Started
+Started
+Started
+
+(base) aminemzali@MacBook-Pro-de-Sylvain kafka-vehicle-project % []
+
++2S
+.9s
+.3s
+.9s
+
+1s
+1s
+
+.4s
+.4s
+.4s
+.4s
+----------------------------------------
+
+--- 2.png ---
+© (base) aminemzali@MacBook-Pro-de-Sylvain kafka-vehicle-project % mkdir producer
+cd producer
+touch simulate vehicles.py
+@ (base) aminemzali@MacBook-Pro-de-Sylvain producer % python3 -m venv venv
+source venv/bin/activate
+pip install kafka-python faker
+Collecting kafka-python
+Downloading kafka_python-2.1.4-py2.py3-none-any.whl (276 kB)
+276.6/276.6 kB 4.1 MB/s eta 0:00:00
+
+Collecting faker
+Downloading faker-37.1.@-py3-none-any.whl (1.9 MB)
+—_—_——_—_—_————— es 1.9/1.9 MB 12.0 MB/s eta 0:00:00
+Collecting tzdata
+Using cached tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Installing collected packages: kafka-python, tzdata, faker
+Successfully installed faker-37.1.0 kafka-python-2.1.4 tzdata-2025.2
+
+[notice] A new release of pip is available: 23.0.1 -> 25.0.1
+[notice] To update, run: pip install --upgrade pip
+© (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % [|]
+----------------------------------------
+
+--- 3.png ---
+@ (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % docker exec -it kafka kafka-topics --create --topic vehicle-data —-bootstrap-server
+alhost:9092 --partitions 1 --replication-factor 1
+Created topic vehicle-data.
+
+What's next:
+Try Docker Debug for seamless, persistent debugging tools in any container or image + docker debug kafka
+Learn more at https://docs.docker.com/go/debug-cli/
+----------------------------------------
+
+--- 4.png ---
+el': 57}
+Sending:
+Ui 99}
+Sending:
+': 93}
+Sending:
+': 79}
+Sending:
+vel': 43}
+
+Sending: {'vehicle_id':
+
+el': 75}
+
+Sending: {'vehicle_id':
+
+': 32}
+
+Sending: {'vehicle_id':
+
+vel': 87}
+
+Sending: {'vehicle_id':
+
+{'vehicle_id':
+{'vehicle_id':
+{'vehicle_id':
+
+{'vehicle_id':
+
+‘veh-4',
+‘veh-2',
+‘veh-4',
+‘veh-4',
+‘veh-4',
+‘veh-5',
+‘veh-2',
+
+‘veh-5',
+
+‘timestamp':
+‘timestamp':
+‘timestamp':
+‘timestamp':
+‘timestamp':
+‘timestamp':
+‘timestamp':
+
+‘timestamp':
+
+1743664644
+
+1743664645
+
+1743664646
+
+1743664647
+
+1743664648
+
+1743664649
+
+1743664650
+
+1743664651
+
+-611537,
+-61519,
+
+-619885,
+.-6234848,
+.-6288981,
+-631018,
+
+-6359448,
+
+-6398091,
+
+"latitude":
+
+"latitude":
+
+"latitude":
+
+latitude': -25.614558,
+
+"latitude":
+
+"latitude":
+
+"latitude":
+
+"latitude":
+
+34.305018, ‘longitude': 143.505552, 'speed_kmh': 59.36,
+
+‘longitude': 89.926927, 'speed_kmh': 39.91,
+
+6.4787735, ‘longitude': 177.222666, 'speed_kmh': 3.92,
+53.427157, 'longitude': 73.846512, 'speed_kmh': 104.39,
+39.9791005, ‘longitude': -22.054631, 'speed_kmh': 15.1,
+
+49.169727, 'longitude': 28.261668, 'speed_kmh': 85.02,
+-72.305269, 'longitude': 159.576207, 'speed_kmh': 20.96,
+—41.6065435, 'longitude': -2.282485, 'speed_kmh': 47.29,
+
+"battery_lev
+‘battery_leve
+
+‘battery_leve
+
+"battery_l
+
+‘battery_le
+
+‘battery_leve
+
+"battery_l
+
+"battery_l
+----------------------------------------
+
+--- 5.png ---
+@ (base) aminemzali@MacBook-Pro-de-Sylvain producer % source venv/bin/activate
+
+@ (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % pip install elasticsearch
+Collecting elasticsearch
+
+Downloading elasticsearch-8.17.2-py3-none-any.whl (717 kB)
+718.0/718.0 kB 8.5 MB/s eta 0:00:00
+
+Collecting elastic-transport<9,>=8.15.1
+Downloading elastic_transport-8.17.1-py3-none-any.whl (64 kB)
+65.0/65.0 kB 7.9 MB/s eta 0:00:00
+
+Collecting certifi
+
+Using cached certifi-2025.1.31-py3-none-any.whl (166 kB)
+Collecting urllib3<3,>=1.26.2
+
+Using cached urllib3-2.3.@-py3-none-any.whl (128 kB)
+Installing collected packages: urllib3, certifi, elastic-transport, elasticsearch
+Successfully installed certifi-2025.1.31 elastic-transport-8.17.1 elasticsearch-8.17.2 urllib3-2.3.0
+
+[notice] A new release of pip is available: 23.0.1 -> 25.0.1
+[notice] To update, run: pip install --upgrade pip
+> (venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % []
+----------------------------------------
+
+--- 6.png ---
+(venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % python
+
+Received: {'vehicle_id': 'veh-1', '@timestamp':
+58.483988, 'speed_kmh': 3.59, 'battery_level': 13}
+Received: {'vehicle_id': 'veh-2', '@timestamp':
+.624331, 'speed_kmh': 20.68, 'battery_level': 50}
+Received: {'vehicle_id': 'veh-4', '@timestamp':
+.907469, 'speed_kmh': 35.53, 'battery_level': 10}
+Received: {'vehicle_id': 'veh-4', '@timestamp':
+211519, 'speed_kmh': 17.69, 'battery_level': 69}
+Received: {'vehicle_id': 'veh-4', '@timestamp':
+12467, 'speed_kmh': 39.71, 'battery_level': 75}
+Received: {'vehicle_id': 'veh-5', '@timestamp':
+296096, 'speed_kmh': 94.04, 'battery_level': 86}
+Received: {'vehicle_id': 'veh-1', '@timestamp':
+395944, 'speed_kmh': 73.6, 'battery_level': 10}
+Received: {'vehicle_id': 'veh-4', '@timestamp':
+888941, 'speed_kmh': 86.07, 'battery_level': 96}
+Received: {'vehicle_id': 'veh-5', '@timestamp':
+
+ATJANON tennant Lbobls NC ON thateteanm, Tavalls £A
+
+"2025-04-03T07:
+"2025-04-03T07:
+"2025-04-03T07:
+*2025-04-03T07:
+*2025-04-03T07:
+*2025-04-03T07:
+*2025-04-03T07:
+*2025-04-03T07:
+
+"2025-04-03T07:
++
+
+31:
+
+Si
+
+31:
+
+31:
+
+31:
+
+Si
+
+31:
+
+31:
+
+31:
+
+consumer_to_es.py
+
+50Z', 'latitude': -44.7262915, 'longitude': -1
+:51Z', 'latitude': -47.789725, 'longitude': 116
+52Z', ‘latitude': 58.216725, ‘longitude’: -142
+53Z', 'latitude': 59.4942935, 'longitude': 83.
+54Z', 'latitude': 75.139365, 'longitude': 64.2
+155Z', 'latitude': -15.007959, 'longitude': 78.
+56Z', ‘latitude’: 31.4283075, 'longitude': 35.
+57Z', ‘latitude’: -81.028558, 'longitude': 16.
+58Z', 'latitude': -74.770449, 'longitude': -40
+----------------------------------------
+
+--- 7.png ---
+(venv) (base) aminemzali@MacBook-Pro-de-Sylvain producer % python simulate_vehicles.py
+
+Sending: {'vehicle_id': 'veh-4', '@timestamp': '2025-04-03T07:
+
+.755223, 'speed_kmh': 55.57, 'battery_level': 12}
+
+Sending: {'vehicle_id': 'veh-4', '@timestamp': '2025-04-03T07:
+
+948, ‘speed_kmh': 40.83, 'battery_level': 33}
+
+Sending: {'vehicle_id': 'veh-1', '@timestamp': '2025-04-03T07:
+
+.943666, 'speed_kmh': 15.03, 'battery_level': 48}
+
+Sending: {'vehicle_id': 'veh-3', '@timestamp': '2025-04-03T07:
+
+471464, 'speed_kmh': 46.32, 'battery_level': 66}
+
+Sending: {'vehicle_id': 'veh-1', '@timestamp': '2025-04-03T07:
+
+733454, 'speed_kmh': 64.96, 'battery_level': 100}
+
+Sending: {'vehicle_id': 'veh-2', '@timestamp': '2025-04-03T07:
+
+53422, 'speed_kmh': 60.54, 'battery_level': 60}
+
+Sending: {'vehicle_id': 'veh-3', '@timestamp': ‘2025-04-03T07:
+
+992168, 'speed_kmh': 82.27, 'battery_level': 60}
+
+Sending: {'vehicle_id': 'veh-4', '@timestamp': '2025-04-03T07:
+
+525479, 'speed_kmh': 9.83, 'battery_level': 23}
+
+Sending: {'vehicle_id': 'veh-1', '@timestamp': '2025-04-03T07:
+
+543093, 'speed_kmh': 35.34, 'battery_level': 29}
+
+Sending: {'vehicle_id': 'veh-5', '@timestamp': '2025-04-03T07:
+
+6013, 'speed_kmh': 50.06, 'battery_level': 53}
+
+Bi)
+
+31:
+
+31:
+
+31:
+
+31:
+
+31:
+
+31:
+
+31:
+
+31:
+
+31:
+
+:10Z',
+
+"latitude":
+11Z', 'latitude':
+12Z', 'latitude':
+13Z', 'latitude':
+14Z', 'latitude':
+15Z', 'latitude':
+16Z', 'latitude':
+17Z', 'latitude':
+18Z', 'latitude':
+
+19Z', ‘latitude':
+
+67.4647885, 'longitude': -14
+-17.126804, 'longitude': -0..
+-46.1508215, ‘longitude’: 12
+58.470845, ‘longitude’: -153
+43.532931, ‘longitude’: -148
+-82.8588175, ‘longitude’: 96
+-22.311056, 'longitude': -66
+54.4988855, ‘longitude’: 167
+60.8705845, ‘longitude’: 116
+-8.407452, ‘longitude’: 30.1
+----------------------------------------
+
+--- 8.png ---
+Edit data view vy Your index pattern matches 1 source.
+
+Name All sources Matching sources
+
+vehicle-data vehicle-data Index
+
+Index pattern
+Rows per page: 10 v
+
+vehicle-data* &
+
+Timestamp field
+@timestamp Vv
+Select a timestamp field for use with the global time filter.
+
+Show advanced settings
+----------------------------------------
+
+--- 9.png ---
+vehicle-data Fy Delete #% Set as default © Edit
+
+Index pattern: vehicle-datax Time field: @timestamp
+
+Fields (11) Scripted fields (0) Field filters (0)  Relationships (0)
+
+QU Search Field type 8 V Schematype 2 v Add field
+
+Name À Type Format Searchable Aggregatable Excluded
+
+@timestamp © date e e Ys
+_id _id e VA
+_index _index e e Ys
+_score ?
+_source _source A
+battery_level long ) e A
+latitude float e e A
+longitude float e e A
+speed_kmh float e e Ys
+vehicle_id text e Ys
+
+Rows per page: 10 v 1 2 >
+----------------------------------------
+
+--- 10.png ---
+@ elastic Q Find apps, content, and more.
+
+= D Dashboard Editing New Dashboard Z V Unsaved changes Settings Share
+= © Q Filter your data using KQL syntax =] v Last 15 minutes G Refresh
+
+® Create visualization @ Add panel (© Add from library & Controls
+
+Messages par minute ouo | | Répartition des messages par véhicule ooo
+30
+veh-1 veh-4
+22.85% 22.07%
+25
+
+20
+
+Count of records
+a
+
+veh-5 16.16%
+
+09:30 09:35 09:40 09:45
+April 3, 2025
+
+@timestamp per 30 seconds
+
+Vitesse moyenne par véhicule ooo
+
+70
+
+60
+
+50
+
+40
+
+30
+
+Average of speed_kmh
+
+20
+----------------------------------------
+
+--- 11.png ---
+C4 Code Fichier Edition Sélection Affichage Atteindre Exécuter Terminal
+
+ec5$o & S ProjetNoSQL By oO GJ
+| D EXPLORATEUR 900 % docker-compose.yml ® simulate_vehicles.py 2 X @ consumer_to_es.py 2 Dy
+V PROJETNOSQL kafka-vehicle-project > producer > @ simulate_vehicles.py > © generate_vehicle_ data
+
+from kafka import KafkaProducer
+from faker import Faker
+import json
+
+> captures
+Y kafka-vehicle-project
+
+© Producer import time
+
+> venv import random
+% consumer_to_es.py 2
+
+% simulate_vehicles.py 2 fake = Faker()
+
+& docker-compose.ym! producer = KafkaProducer(
+P y bootstrap_servers='localhost:9092', i
+
+value_serializer=lLambda v: json.dumps(v).encode('utf-8')
+
+def generate_vehicle_data(vehicle_id):
+
+return {
+“vehicle_id": vehicle_id,
+16 "@timestamp": time.strftime("%Y-%m%dT%H:%M:%S7", time.gmtime()),
+
+"latitude": float(fake.latitude()),
+"Longitude": float(fake. longitude()),
+"speed_kmh": round(random.uniform(@, 120), 2),
+“battery_level": random. randint(10, 100)
+
+if name__ == "__main
+vehicle_ids = [f"veh-{i}" for i in range(1, 6)]
+
+while True:
+vehicle = random. choice(vehicle_ids)
+data = generate_vehicle_data(vehicle)
+print(f"Sending: {data}")
+producer.send("vehicle-data", data)
+time.sleep(1)
+
+PROBLEMES la] SORTIE CONSOLE DE DÉBOGAGE TERMINAL PORTS COMMENTAIRES HISTORIQUE SQL MONITEUR DE TÂCHE tues A &X
+
+> STRUCTURE
+
+MCnRONOTOGIE Sending: {'vehicle_id': 'veh-1', ‘@timestamp': '2025-04-03T07:54:26Z', 'latitude': 1.6479175, ‘longitude’: 94.24 [>] python3.10 producer iy À
+8434, 'speed_kmh': 114.58, 'battery_level': 52} 57
+> APPLICATION BUILDER Sending: {'vehicle_id': 'veh-5', '@timestamp': '2025-04-03707:54:27Z', ‘latitude': -73.086585, 'longitude': -95. b=) zsh producer
+
+648532, 'speed_kmh': 82.32, 'battery_level': 100}
+
+v
+
+> VS CODE POKEMON [>] python3.10 producer
+
+X Ws Launchpad @OA4 © Connect MROWAWSAN TS ull ecm Veron bys ETE 0c) L16,col74 Espaces:4 UTF-8 LF {} Python & 3.13.264-bit £5 CA
+
+288268800006 600 =m*
+----------------------------------------
+
+--- 12.png ---
+@ Code Fichier Edition Sélection Affichage Atteindre Exécuter Terminal Jeu. 3 avr. 09:54
+
+eco € A ProjetNoSQL By ee i
+| D EXPLORATEUR 900 % docker-compose.yml X ® simulate_vehicles.py 2 @ consumer_to_es.py 2
+V PROJETNOSQL kafka-vehicle-project > & docker-compose.yml
+> captures services:
+Y kafka-vehicle-project
+Y producer
+> venv elasticsearch:
+° image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+@ consumer_to_es.py 2 container_name: elasticsearch
+® simulate_vehicles.py 2 environment:
+
+— discovery. type=single-node
+
+— xpack.security.enabled=false
+ports:
+
+— "9200:9200"
+networks:
+
+- elk
+
+% docker-compose.yml
+
+kibana:
+image: docker.elastic.co/kibana/kibana:8.11.1
+container_name: kibana
+depends_on:
+- elasticsearch
+environment:
+— ELASTICSEARCH_HOSTS=http: //elasticsearch: 9200
+ports:
+- "5601:5601"
+networks:
+- elk
+
+networks:
+51 elk:
+
+PROBLEMES la] SORTIE CONSOLE DE DÉBOGAGE TERMINAL PORTS COMMENTAIRES HISTORIQUE SQL MONITEUR DE TÂCHE
+
+> STRUCTURE
+Sending: {'vehicle_id': 'veh-4', '@timestamp': '2025-04-03T07:54:28Z', 'latitude': 51.35145, 'longitude': 163.417 [J pytho
+> CHRONOLOGIE 7293, 'speed_kmh': 36.84, ‘battery_level': 77} —
+> APPLICATION BUILDER Sending: {'vehicle_id': 'veh-2', '@timestamp': '2025-04-03107:54:29Z', ‘latitude’: 25.823269, ‘longitude’: -99.1 U4
+, 63615, 'speed_kmh': 111.27, 'battery_level': 66} b>]
+
+> VS CODE POKEMON
+
+X Gs Launchpad @0 A4 6 Connect ROME TUNER PERTE) L51,col7 Espaces:2 UTF-8 LF {} Compos
+
+288268800006 600 =m
+----------------------------------------
+
+--- 13.png ---
+C4 Code Fichier Edition Sélection Affichage Atteindre Exécuter Terminal
+
+e ee € A ProjetNoSQL By Boa
+| D EXPLORATEUR poo % docker-compose.yml ® simulate_vehicles.py 2 % consumer_to_es.py 2 X Dy
+V PROJETNOSQL kafka-vehicle-project > producer > @ consumer_to_es.py > ...
+
+> captures from kafka import KafkaConsumer
+from elasticsearch import Elasticsearch
+import json
+
+Y kafka-vehicle-project
+
+Y producer
+
+> venv # Connexion à Elasticsearch (localhost :9200)
+æ consumer_to_es.py 2 es = Elasticsearch("http://localhost: 9200")
+® simulate_vehicles.py 2
+
+# Connexion au topic Kafka
+consumer = KafkaConsumer(
+"vehicle-data",
+bootstrap_servers="localhost:9092",
+value_deserializer=lambda v: json.loads(v.decode("utf-8")),
+auto_offset_reset='earliest',
+enable_auto_commit=True, =
+group_id="vehicle-consumer-group"
+
+% docker-compose.yml
+
+for message in consumer:
+data = message.value
+print(f"Received: {data}")
+
+# Indexation dans Elasticsearch
+23 es. index(index="vehicle-data", document=data)|
+
+PROBLEMES la] SORTIE CONSOLE DE DÉBOGAGE TERMINAL PORTS COMMENTAIRES HISTORIQUE SQL MONITEUR DE TÂCHE
+
+> STRUCTURE
+
+Sending: {'vehicle_id': 'veh-5', '@timestamp': '2025-04-03107:54:33Z', 'latitude': 76.0638475, 'longitude': -87.
+> CHRONOLOGIE 226839, ‘speed_kmh': 12.42, ‘battery_level': 94}
+> APPLICATION BUILDER Sending: {'vehicle_id': 'veh-4', '@timestamp': '2025-04-03107:54:34Z', 'latitude': 50.335757, ‘longitude’: -48.3
+29204, 'speed_kmh': 29.45, 'battery_level': 55}
+
+> VS CODE POKEMON
+X  « Launchpad @0A4 6 Connect (&) AWS: AdministratorAccess-87 2515283809 L23,col50 Espaces:4 UTF-8 LF {} Python
+
+988268800006 600 =m*
+----------------------------------------
