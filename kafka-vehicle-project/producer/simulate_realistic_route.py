@@ -5,70 +5,123 @@ import time
 import numpy as np
 from geopy.distance import geodesic
 
-# Kafka setup
 producer = KafkaProducer(
     bootstrap_servers='localhost:9092',
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
-vehicle_id = "veh-42"
-vehicle_type = "car"
+# Définir les véhicules et leurs parcours
+vehicles = {
+    "veh-42": {
+        "type": "car",
+        "route": [
+            (48.8566, 2.3522),
+            (48.8605, 2.3364),
+            (48.8655, 2.3212),
+            (48.8738, 2.2950),
+            (48.8584, 2.2945),
+            (48.8500, 2.2780),
+            (48.8373, 2.2876),
+            (48.8401, 2.3256),
+            (48.8506, 2.3469),
+            (48.8566, 2.3522)
+        ]
+    },
+    "bus-7": {
+        "type": "bus",
+        "route": [
+            (45.7578, 4.8320),  # Lyon Centre
+            (45.7600, 4.8500),
+            (45.7650, 4.8700),
+            (45.7700, 4.8800),
+            (45.7750, 4.8900),
+            (45.7777, 4.8350)   # Retour
+        ]
+    },
+    "truck-21": {
+        "type": "truck",
+        "route": [
+            (43.2965, 5.3698),  # Marseille
+            (43.2990, 5.3800),
+            (43.3050, 5.3900),
+            (43.3100, 5.4000),
+            (43.3200, 5.4100),
+            (43.2965, 5.3698)   # Retour
+        ]
+    }
+}
 
-# Itinéraire simulé
-route_points = [
-    (48.8566, 2.3522),  # Paris
-    (48.8605, 2.3364),
-    (48.8655, 2.3212),
-    (48.8738, 2.2950),
-    (48.8584, 2.2945),  # Tour Eiffel
-    (48.8500, 2.2780),
-    (48.8373, 2.2876),
-    (48.8401, 2.3256),
-    (48.8506, 2.3469),
-    (48.8566, 2.3522)   # Retour
-]
+# Initialiser les états
+vehicle_states = {}
 
-start_time = datetime.utcnow()
-current_time = start_time
-speed = np.random.uniform(10, 15)
-battery = 100
-pause_counter = 0
+for vid, config in vehicles.items():
+    vehicle_states[vid] = {
+        "route_index": 0,
+        "step": 0,
+        "speed": np.random.uniform(8, 15),
+        "battery": 100,
+        "pause_counter": 0,
+        "time": datetime.utcnow()
+    }
 
-for i in range(len(route_points) - 1):
-    lat_start, lon_start = route_points[i]
-    lat_end, lon_end = route_points[i + 1]
+# Simulation continue
+while True:
+    for vid, config in vehicles.items():
+        state = vehicle_states[vid]
+        route = config["route"]
+        idx = state["route_index"]
+        if idx >= len(route) - 1:
+            state["route_index"] = 0
+            state["step"] = 0
+            idx = 0
 
-    segment_distance = geodesic((lat_start, lon_start), (lat_end, lon_end)).km
-    step_distance = 0.02  # ≈20 mètres
-    steps = int(segment_distance / step_distance)
+        lat_start, lon_start = route[idx]
+        lat_end, lon_end = route[idx + 1]
 
-    for j in range(steps):
+        segment_distance = geodesic((lat_start, lon_start), (lat_end, lon_end)).km
+        step_distance = 0.02
+        steps = int(segment_distance / step_distance)
+
+        # Avancement dans le tronçon
+        j = state["step"]
         fraction = j / steps
         lat = lat_start + fraction * (lat_end - lat_start)
         lon = lon_start + fraction * (lon_end - lon_start)
 
-        if pause_counter > 0:
+        # Pause / accélération
+        if state["pause_counter"] > 0:
             speed = 0
-            pause_counter -= 1
+            state["pause_counter"] -= 1
         else:
-            speed_variation = np.random.uniform(-1, 1)
-            speed = max(2, min(18, speed + speed_variation))
-            if np.random.rand() < 0.02:
-                pause_counter = np.random.randint(30, 90)
+            speed_var = np.random.uniform(-1, 1)
+            state["speed"] = max(2, min(18, state["speed"] + speed_var))
+            if np.random.rand() < 0.01:
+                state["pause_counter"] = np.random.randint(30, 90)
 
-        battery = max(0, battery - 0.01)
+        # Batterie
+        state["battery"] = max(0, state["battery"] - 0.02)
+
+        # Timestamp
+        now = state["time"]
 
         message = {
-            "vehicle_id": vehicle_id,
-            "type": vehicle_type,
-            "@timestamp": current_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "vehicle_id": vid,
+            "type": config["type"],
+            "@timestamp": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "latitude": round(lat, 6),
             "longitude": round(lon, 6),
-            "speed_kmh": round(speed, 2),
-            "battery_level": round(battery, 1)
+            "speed_kmh": round(state["speed"], 2),
+            "battery_level": round(state["battery"], 1)
         }
 
         print("Sending:", message)
-        producer.send("vehicle-data-v2", value=message)
-        time.sleep(1)
-        current_time += timedelta(seconds=1)
+        producer.send("vehicle-data-v2", key=vid.encode(), value=message)
+
+        # Avancer la simulation
+        state["time"] += timedelta(seconds=1)
+        state["step"] += 1
+        if state["step"] >= steps:
+            state["route_index"] += 1
+            state["step"] = 0
+
+    time.sleep(1)
